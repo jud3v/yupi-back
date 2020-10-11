@@ -22,8 +22,12 @@ Route::group([
 ], function ($router) {
 
     Route::post('login', 'AuthController@login');
+    Route::post('register', 'AuthController@register');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
 
 });
+
+Route::resource('receipts','ReceiptController');
+Route::resource('networks','NetworkController');

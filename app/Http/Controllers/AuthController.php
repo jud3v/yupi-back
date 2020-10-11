@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +16,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login','register']]);
     }
 
     /**
@@ -79,5 +81,12 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth()->factory('api')->getTTL() * 60
         ]);
+    }
+
+    public function register(Request $request)
+    {
+        $data = $request->all();
+        $data['role'] = 'moderator';
+        return User::create($data);
     }
 }
